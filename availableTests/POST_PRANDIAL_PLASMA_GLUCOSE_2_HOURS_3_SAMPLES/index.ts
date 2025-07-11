@@ -1,0 +1,13 @@
+import { POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES_FORM } from "@/availableTests/POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES/components/form";
+import { SavedReport } from "@/availableTests/POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES/components/report";
+import { type POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES_TYPE } from "@availableTests/POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES/type";
+import { EXAMPLES } from "@availableTests/POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES/examples";
+import { actions } from "@availableTests/POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES/actions";
+
+export {
+  type POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES_TYPE,
+  POST_PRANDIAL_PLASMA_GLUCOSE_2_HOURS_3_SAMPLES_FORM,
+  SavedReport,
+  EXAMPLES,
+  actions,
+};
