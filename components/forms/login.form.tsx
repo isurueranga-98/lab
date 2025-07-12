@@ -181,7 +181,7 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps): JSX.Element => {
         </form>
       </Form>
 
-      <div className="text-center text-sm">
+      {/* <div className="text-center text-sm">
         <span className="text-muted-foreground">Don&apos;t have an account? </span>
         <a
           href="/auth/register"
@@ -189,7 +189,7 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps): JSX.Element => {
         >
           Create account
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };
