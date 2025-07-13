@@ -186,18 +186,25 @@ export const RENAL_PROFILE_FORM = ({ quickTest, test }: props) => {
       },
     ];
 
-    const response = await actions.updateResults(
-      quickTest.id!,
-      test,
-      quickTestResults,
-    );
+    try {
+      const response = await actions.updateResults(
+        quickTest.id!,
+        test,
+        quickTestResults,
+      );
 
-    console.log(response);
-    if (response.success) {
-      setCompleted(true);
-      showToast.success("Test Results Saved!", "Test results have been saved successfully.");
-    } else {
-      showToast.error("Save Failed", "Failed to save test results. Please try again.");
+      console.log("Update response:", response);
+      
+      if (response.success) {
+        setCompleted(true);
+        showToast.success("Test Results Saved!", "Test results have been saved successfully.");
+      } else {
+        console.error("Update failed:", response.error);
+        showToast.error("Save Failed", response.error || "Failed to save test results. Please try again.");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      showToast.error("Save Failed", "An unexpected error occurred. Please try again.");
     }
   };
 

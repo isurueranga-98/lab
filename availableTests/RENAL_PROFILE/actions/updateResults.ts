@@ -10,10 +10,11 @@ export const updateResults = async (
   results: RENAL_PROFILE_TYPE["results"],
 ): Promise<ActionResponse<null>> => {
   try {
-    // log;
+    console.log("UpdateResults called with:", { quickTestId, testName: test.name, resultsCount: results.length });
 
     // **Input Validation**
     if (!quickTestId || typeof quickTestId !== "string") {
+      console.error("Invalid quickTestId:", quickTestId);
       return {
         success: false,
         error: "Invalid quickTestId provided.",
@@ -21,6 +22,7 @@ export const updateResults = async (
     }
 
     if (!test || !test.name) {
+      console.error("Invalid test:", test);
       return {
         success: false,
         error: "Invalid test information provided.",
@@ -28,9 +30,22 @@ export const updateResults = async (
     }
 
     if (!results || !Array.isArray(results)) {
+      console.error("Invalid results:", results);
       return {
         success: false,
         error: "Invalid results provided.",
+      };
+    }
+
+    console.log("Database URL available:", !!process.env.DATABASE_URL);
+    console.log("Environment:", process.env.NODE_ENV);
+
+    // Validate ObjectId format
+    if (!/^[0-9a-fA-F]{24}$/.test(quickTestId)) {
+      console.error("Invalid ObjectId format:", quickTestId);
+      return {
+        success: false,
+        error: "Invalid ID format provided.",
       };
     }
 
@@ -50,16 +65,18 @@ export const updateResults = async (
       ],
     });
 
-    console.log(updateResult);
+    console.log("Database update result:", updateResult);
 
     const result = updateResult as unknown as MongoDBUpdateResult;
 
     // **Validate the Update Result**
     if (result.ok === 1 && result.nModified > 0) {
       // **Success**
+      console.log("Update successful:", result);
       return { success: true, data: null };
     } else if (result.ok === 1 && result.nModified === 0) {
       // **No Documents Updated**
+      console.warn("No documents updated:", result);
       return {
         success: false,
         error: "No matching test found or no changes made.",
@@ -72,12 +89,14 @@ export const updateResults = async (
       } else if (result.writeConcernError) {
         errorMessage = result.writeConcernError.errmsg;
       }
+      console.error("Update failed with errors:", result);
       return {
         success: false,
         error: errorMessage,
       };
     }
   } catch (error) {
+    console.error("Server action error:", error);
     return actionErrorHandler(error);
   }
 };
