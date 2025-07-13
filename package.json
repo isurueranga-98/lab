@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "dev-secure": "next dev --experimental-https",
-    "build": "next build",
+    "build": "pnpm prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "deploy": "vercel --prod",
     "prepare": "husky",
-    "test": "vitest run"
+    "test": "vitest run",
+    "postinstall": "pnpm prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
