@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterFormData, registerSchema } from "@/lib/schema/register.schema";
 import { registerUserWithData } from "@/lib/actions/register";
+import { showToast } from "@/lib/utils/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -30,6 +31,7 @@ interface RegisterFormProps {
 
 export const RegisterForm = ({ onSubmit }: RegisterFormProps): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<RegisterFormData>({
@@ -38,6 +40,7 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps): JSX.Element => {
       username: "",
       userID: "",
       password: "",
+      confirmPassword: "",
       role: "EMPLOYEE",
     },
   });
@@ -54,7 +57,7 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps): JSX.Element => {
         if (result.success) {
           console.log("Registration successful:", result.message);
           form.reset();
-          alert("Account created successfully! You can now log in.");
+          showToast.success("Account Created!", "Your account has been created successfully. You can now log in.");
         } else {
           console.error("Registration failed:", result.message);
           
@@ -67,20 +70,20 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps): JSX.Element => {
               });
             });
           } else {
-            alert(`Registration failed: ${result.message}`);
+            showToast.error("Registration Failed", result.message || "Failed to create account. Please try again.");
           }
         }
       }
     } catch (error) {
       console.error("Registration error:", error);
-      alert("An error occurred during registration. Please try again.");
+      showToast.error("Registration Error", "An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-6">
+    <div className="w-full max-w-md mx-auto space-y-6 p-6">
       <div className="text-center space-y-2">
         <div className="flex justify-center">
           <UserPlus className="h-12 w-12 text-primary" />
@@ -191,6 +194,41 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps): JSX.Element => {
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Enter your password again"
+                      disabled={isSubmitting}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      disabled={isSubmitting}
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <Button
             type="submit"
             className="w-full"
@@ -201,15 +239,6 @@ export const RegisterForm = ({ onSubmit }: RegisterFormProps): JSX.Element => {
         </form>
       </Form>
 
-      <div className="text-center text-sm">
-        <span className="text-muted-foreground">Already have an account? </span>
-        <a
-          href="/auth/login"
-          className="text-primary hover:underline font-medium"
-        >
-          Sign in
-        </a>
-      </div>
     </div>
   );
 };

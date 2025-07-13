@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import FormSubmit from "@/components/ui/form-submit";
 import { useAuthContext } from "@/contexts/auth-context";
+import { showToast } from "@/lib/utils/toast";
 import { actions } from "@availableTests/URIC_ACID";
 import { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -75,7 +76,12 @@ export const URIC_ACID_FORM = ({ quickTest, test }: props) => {
     );
 
     console.log(response);
-    if (response.success) setCompleted(true);
+    if (response.success) {
+      setCompleted(true);
+      showToast.success("Test Results Saved!", `${test.results[0].name} results have been saved successfully.`);
+    } else {
+      showToast.error("Save Failed", "Failed to save test results. Please try again.");
+    }
   };
 
   const formRef = useRef<HTMLDivElement>(null);

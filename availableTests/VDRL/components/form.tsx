@@ -104,7 +104,12 @@ export const VDRL_FORM = ({ quickTestId, test }: props) => {
     );
 
     console.log(response);
-    if (response.success) setCompleted(true);
+    if (response.success) {
+      setCompleted(true);
+      showToast.success("Test Results Saved!", "Test results have been saved successfully.");
+    } else {
+      showToast.error("Save Failed", "Failed to save test results. Please try again.");
+    }
   };
 
   const formRef = useRef<HTMLDivElement>(null);

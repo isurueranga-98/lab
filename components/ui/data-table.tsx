@@ -80,6 +80,24 @@ const DataTable = <TData, TValue>({
     filterByValues[0].columnId,
   );
 
+  // Function to handle filter column change
+  const handleFilterColumnChange = (newColumnId: string) => {
+    // Clear the current filter before changing columns
+    if (filterValue) {
+      table.getColumn(filterValue)?.setFilterValue("");
+    }
+    setFilterValue(newColumnId);
+  };
+
+  // Add console log to debug filtering
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const column = table.getColumn(filterValue);
+    if (column) {
+      column.setFilterValue(value);
+    }
+  };
+
   return (
     <div>
       {/* --------------------------------------------------------------------------------- */}
@@ -90,25 +108,21 @@ const DataTable = <TData, TValue>({
             <div className="flex">
               <Input
                 placeholder={`Filter by ${
-                  filterByValues.filter((value) => {
-                    return value.columnId === filterValue;
-                  })[0].columnName
+                  filterByValues.find((value) => value.columnId === filterValue)?.columnName || "column"
                 }`}
                 value={
-                  (table.getColumn(filterValue)?.getFilterValue() as string) ??
-                  ""
+                  (table.getColumn(filterValue)?.getFilterValue() as string) ?? ""
                 }
-                onChange={(event) =>
-                  table
-                    .getColumn(filterValue)
-                    ?.setFilterValue(event.target.value)
-                }
+                onChange={handleFilterChange}
                 className="max-w-sm"
               />
               <div className="flex">
-                <Select onValueChange={(value) => setFilterValue(value)}>
+                <Select 
+                  value={filterValue} 
+                  onValueChange={handleFilterColumnChange}
+                >
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="select column to filter" />
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {filterByValues?.map((value) => (

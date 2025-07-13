@@ -13,14 +13,14 @@ export const QuickTestTable = async (): Promise<JSX.Element> => {
   return (
     <DataTable
       columns={QuickTestColumns}
-      data={quickTests.success ? quickTests.data : []}
+      data={quickTests.success ? quickTests.data.reverse() : []}
       addNewItemButton={<></>}
       filterByValues={[
         { columnId: "firstName", columnName: "First Name" },
         { columnId: "lastName", columnName: "Last Name" },
-        { columnId: "id", columnName: "Referece No" },
+        { columnId: "id", columnName: "Reference No" },
         { columnId: "gender", columnName: "Gender" },
-        { columnId: "phonr", columnName: "Phone" },
+        { columnId: "phone", columnName: "Phone" },
       ]}
     />
   );

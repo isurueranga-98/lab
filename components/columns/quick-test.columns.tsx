@@ -9,7 +9,10 @@ export const QuickTestColumns: ColumnDef<QuickTest>[] = [
   {
     accessorKey: "id",
     accessorFn: (row) => row.id,
-    filterFn: (row, id, value) => value.includes(row.getValue(id)),
+    filterFn: (row, id, value) => {
+      const rowValue = row.getValue(id) as string;
+      return rowValue?.toLowerCase().includes(value.toLowerCase());
+    },
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -23,7 +26,10 @@ export const QuickTestColumns: ColumnDef<QuickTest>[] = [
   {
     accessorKey: "firstName",
     accessorFn: (row) => row.patientInformation.firstName,
-    filterFn: (row, id, value) => value.includes(row.getValue(id)),
+    filterFn: (row, id, value) => {
+      const rowValue = row.getValue(id) as string;
+      return rowValue?.toLowerCase().includes(value.toLowerCase());
+    },
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -37,7 +43,10 @@ export const QuickTestColumns: ColumnDef<QuickTest>[] = [
   {
     accessorKey: "lastName",
     accessorFn: (row) => row.patientInformation.lastName,
-    filterFn: (row, id, value) => value.includes(row.getValue(id)),
+    filterFn: (row, id, value) => {
+      const rowValue = row.getValue(id) as string;
+      return rowValue?.toLowerCase().includes(value.toLowerCase());
+    },
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -51,7 +60,10 @@ export const QuickTestColumns: ColumnDef<QuickTest>[] = [
   {
     accessorKey: "gender",
     accessorFn: (row) => row.patientInformation.gender,
-    filterFn: (row, id, value) => value.includes(row.getValue(id)),
+    filterFn: (row, id, value) => {
+      const rowValue = row.getValue(id) as string;
+      return rowValue?.toLowerCase().includes(value.toLowerCase());
+    },
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -65,7 +77,10 @@ export const QuickTestColumns: ColumnDef<QuickTest>[] = [
   {
     accessorKey: "phone",
     accessorFn: (row) => row.patientInformation.phone,
-    filterFn: (row, id, value) => value.includes(row.getValue(id)),
+    filterFn: (row, id, value) => {
+      const rowValue = row.getValue(id) as string;
+      return rowValue?.toLowerCase().includes(value.toLowerCase());
+    },
     header: ({ column }) => (
       <Button
         variant="ghost"

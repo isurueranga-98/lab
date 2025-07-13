@@ -3,6 +3,7 @@ import { useQuickTestState } from "@/store";
 import { Button } from "@/components/ui/button";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { createQuickTest } from "@/lib/actions/quick-test/create-quick-test.action";
+import { showToast } from "@/lib/utils/toast";
 import { useState } from "react";
 import { ValueIcon } from "@radix-ui/react-icons";
 import { QuickTest } from "@/lib/utils/types";
@@ -143,12 +144,16 @@ export const QuickTestReceipt = ({
             console.log(receipt);
             if (receipt.success) {
               setReceipt(receipt.data);
+              showToast.success("Receipt Saved!", "Your test receipt has been saved successfully.");
+              setSaving(false);
+              // Small delay to show the toast message before navigation
+              setTimeout(() => {
+                handleNext();
+              }, 1500);
             } else {
-              alert("Failed to save receipt");
+              showToast.error("Save Failed", "Failed to save receipt. Please try again.");
+              setSaving(false);
             }
-
-            setSaving(false);
-            handleNext();
           }}
         >
           {saving ? <ValueIcon /> : "Save"} <GrNext />

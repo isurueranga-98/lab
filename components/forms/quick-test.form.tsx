@@ -53,7 +53,7 @@ export const QuickTestForm = forwardRef(
           zip: !patientInformation ? "" : patientInformation.address.zip,
         },
         referredBy: !patientInformation
-          ? "SELF_REQUEST"
+          ? ""
           : patientInformation.referredBy,
       },
     });
@@ -171,7 +171,7 @@ export const QuickTestForm = forwardRef(
             </fieldset>
             {/* Age fieldset */}
             <fieldset className="my-4">
-              <legend>Age (years-months-days)</legend>
+              <legend>Age (years* - months - days)</legend>
               <div className="flex space-x-4">
                 <FormField
                   control={form.control}
@@ -180,7 +180,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Years</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Years" />
+                        <Input {...field} placeholder="Years *" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -193,7 +193,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Months</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Months" />
+                        <Input {...field} placeholder="Months (optional)" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -206,7 +206,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Days</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Days" />
+                        <Input {...field} placeholder="Days (optional)" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -225,7 +225,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Phone</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Phone Number" />
+                        <Input {...field} placeholder="Phone Number *" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -238,7 +238,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Email</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Email" />
+                        <Input {...field} placeholder="Email (optional)" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -257,7 +257,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Street</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Street" />
+                        <Input {...field} placeholder="Street *" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -270,7 +270,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">City</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="City" />
+                        <Input {...field} placeholder="City *" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -283,7 +283,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Zip</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Zip Code" />
+                        <Input {...field} placeholder="Zip Code (optional)" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -302,7 +302,7 @@ export const QuickTestForm = forwardRef(
                     <FormItem>
                       <FormLabel className="hidden">Referred By</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="SELF REQUEST" />
+                        <Input {...field} placeholder="Referred By *" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

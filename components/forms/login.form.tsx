@@ -8,6 +8,7 @@ import { LoginFormData, loginSchema } from "@/lib/schema/login.schema";
 import { loginUser } from "@/lib/actions/login";
 import { setAuthToken } from "@/lib/auth-client";
 import { useAuthContext } from "@/contexts/auth-context";
+import { showToast } from "@/lib/utils/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -70,16 +71,18 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps): JSX.Element => {
         // Navigate based on user role
         if (result.user?.role === "EMPLOYEE") {
           console.log("Redirecting employee to quick-test page...");
+          showToast.success("Login successful!", `Welcome back, ${result.user?.username}!`);
           // router.push("/quick-test");
         } else if (result.user?.role === "TESTER") {
           console.log("Tester logged in, staying on home page...");
+          showToast.success("Login successful!", `Welcome back, ${result.user?.username}! You can now access test results.`);
           // Stay on home page for testers
         } else if (result.user?.role === "ADMIN") {
           // You can add admin dashboard navigation here
           console.log("Admin logged in successfully");
-          alert(`Welcome back, Admin! Role: ${result.user?.role}`);
+          showToast.success("Admin Login Successful!", `Welcome back, ${result.user?.username}! You have full access to the system.`);
         } else {
-          alert(`Welcome back! Role: ${result.user?.role}`);
+          showToast.success("Login successful!", `Welcome back, ${result.user?.username}!`);
         }
       } else {
         console.error("Login failed:", result.message);
@@ -93,12 +96,12 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps): JSX.Element => {
             });
           });
         } else {
-          alert(`Login failed: ${result.message}`);
+          showToast.error("Login Failed", result.message || "Invalid credentials. Please try again.");
         }
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("An error occurred during login. Please try again.");
+      showToast.error("Login Error", "An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

@@ -26,6 +26,7 @@ import {
 } from "@/availableTests/STOOL_OCCULT_BLOOD";
 import { QuickTest } from "@/lib/utils/types";
 import { useAuthContext } from "@/contexts/auth-context";
+import { showToast } from "@/lib/utils/toast";
 
 type props = {
   test: STOOL_OCCULT_BLOOD_TYPE;
@@ -76,7 +77,12 @@ export const STOOL_OCCULT_BLOOD_FORM = ({ quickTest, test }: props) => {
     );
 
     console.log(response);
-    if (response.success) setCompleted(true);
+    if (response.success) {
+      setCompleted(true);
+      showToast.success("Test Results Saved!", "Test results have been saved successfully.");
+    } else {
+      showToast.error("Save Failed", "Failed to save test results. Please try again.");
+    }
   };
 
   const formRef = useRef<HTMLDivElement>(null);
